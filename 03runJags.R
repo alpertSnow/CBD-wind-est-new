@@ -10,7 +10,7 @@ library(R2jags)
 library(coda)
 
 ## settings
-data <- list('n.valid.U', 'Ux.map', 'Uy.map', 'k.map', 'U.mu', 'U.cov.obs.array',
+data <- list('n.valid.U', 'Ux.map', 'Uy.map', 'k.map', 'U.mu', 'U.cov.obs.array', 'U.obs.array', 'N',
              'U.ref', 'p.wdir', 'wdir.Cat', 'logWspdLower', 'logWspdUpper', 'wdirs')
 parameters <- c('wdir', 'wspd', 'i.wdir', 'tau')
 inits <- NULL

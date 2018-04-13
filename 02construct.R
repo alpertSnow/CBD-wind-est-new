@@ -18,7 +18,9 @@ windfinder <- function(){
                 U.cov.array[1, 1, i] <- U.cov.obs.array[1,1,i] + wspd.var[i]
                 U.cov.array[2, 2, i] <- U.cov.obs.array[2,2,i] + wspd.var[i]
                 U.T.array[1:2,1:2,i] <- inverse(U.cov.array[,,i])
-                U.mu[, i] ~ dmnorm(c(wspd.x[i], wspd.y[i]), tau * U.T.array[,,i]) # 3 for 6:00 GMT
+                for(j in 1:N){
+                        U.obs.array[j, , i] ~ dmnorm(c(wspd.x[i], wspd.y[i]), tau * U.T.array[,,i]) # 3 for 6:00 GMT
+                }
         }
         wspd <- rel.wspd * U.ref
         wdir <- wdirs[i.wdir]

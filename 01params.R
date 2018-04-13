@@ -28,6 +28,7 @@ Uy.pre <- read.csv(f.Uy.pre, row.names = 1)
 k.pre <- read.csv(f.k.pre, row.names = 1)
 Ux.obs <- read.csv(f.Ux.obs, row.names = 1)
 Uy.obs <- read.csv(f.Uy.obs, row.names = 1)
+N <- nrow(Ux.obs)
 
 ## process pre abd obs data -> mu & covMat (array)
 # delete the ignored location in obs
@@ -41,6 +42,7 @@ U.obs.list <- mapply(cbind, Ux.obs.list, Uy.obs.list, SIMPLIFY = FALSE)
 L1 <- lapply(U.obs.list, cov, use = 'complete.obs')
 # L2 <- lapply(L1, inv)
 # (2, 2, 13)
+U.obs.array <- array(unlist(U.obs.list), dim = c(nrow(U.obs.list[[1]]), ncol(U.obs.list[[1]]), length(U.obs.list)))
 U.cov.obs.array <- array(unlist(L1), dim = c(nrow(L1[[1]]), ncol(L1[[1]]), length(L1))) # array of covarience matrixs
 
 # delete in pre
