@@ -12,7 +12,7 @@ library(coda)
 ## settings
 data <- list('n.valid.U', 'Ux.map', 'Uy.map', 'k.map', 'U.mu', 'U.cov.obs.array',
              'U.ref', 'p.wdir', 'wdir.Cat', 'logWspdLower', 'logWspdUpper', 'wdirs')
-parameters <- c('wdir', 'wspd', 'i.wdir')
+parameters <- c('wdir', 'wspd', 'i.wdir', 'tau')
 inits <- NULL
 
 wf.sim <- jags(data, inits, parameters, 'windfinder.bug', n.chains = 3, n.iter = 5000, n.burnin = 1000, n.thin = 1)

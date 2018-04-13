@@ -18,7 +18,7 @@ windfinder <- function(){
                 U.cov.array[1, 1, i] <- U.cov.obs.array[1,1,i] + wspd.var[i]
                 U.cov.array[2, 2, i] <- U.cov.obs.array[2,2,i] + wspd.var[i]
                 U.T.array[1:2,1:2,i] <- inverse(U.cov.array[,,i])
-                U.mu[, i] ~ dmnorm(c(wspd.x[i], wspd.y[i]), U.T.array[,,i]/2) # 3 for 6:00 GMT
+                U.mu[, i] ~ dmnorm(c(wspd.x[i], wspd.y[i]), tau * U.T.array[,,i]) # 3 for 6:00 GMT
         }
         wspd <- rel.wspd * U.ref
         wdir <- wdirs[i.wdir]
@@ -27,9 +27,10 @@ windfinder <- function(){
         Mwdir ~ dcat(p.wdir)
         i.wdir <- wdir.Cat[Mwdir]
         # wind speed
-        #log.rel.wspd ~ dunif(logWspdLower, logWspdUpper)
-        #rel.wspd <- 10^log.rel.wspd
-        rel.wspd ~ dunif(0,10)
+        log.rel.wspd ~ dunif(logWspdLower, logWspdUpper)
+        rel.wspd <- 10^log.rel.wspd
+#        rel.wspd ~ dunif(0,10)
+        tau ~ dgamma(1e-3,1e-3)
 }
 wf.path <- file.path(getwd(), 'windfinder.bug')
 write.model(windfinder, wf.path)
